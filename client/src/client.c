@@ -57,6 +57,8 @@ int main(void)
 
 	/*---------------------------------------------------PARTE 5-------------------------------------------------------------*/
 	// Proximamente
+
+	printf("Cliente cerrado!");
 }
 
 t_log* iniciar_logger(void)
@@ -81,17 +83,27 @@ t_config* iniciar_config(void)
 	return nuevo_config;
 }
 
+char* pedir_dato(t_log* logger, char* leido){
+	leido = readline("> ");
+	log_info(logger, ">> %s", leido);
+	return leido;
+}
+
 void leer_consola(t_log* logger)
 {
 	char* leido;
 
 	// La primera te la dejo de yapa
-	leido = readline("> ");
+	leido = pedir_dato(logger, leido);
 
 	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
-
+	while(strcmp(leido, "")){
+		free(leido);
+		leido = pedir_dato(logger, leido);
+	}
 
 	// ¡No te olvides de liberar las lineas antes de regresar!
+	free(leido);
 
 }
 
